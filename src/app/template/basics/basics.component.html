@@ -5,18 +5,22 @@
 
     <div class="col">
 
-        <form (ngSubmit)="save(myForm)" #myForm="ngForm" autocomplete="off">
+        <form (ngSubmit)="save()" #myForm="ngForm" autocomplete="off">
             <!-- Product field -->
             <div class="mb-3 row">
               <label class="col-sm-3 col-form-label">Product</label>
                 <div class="col-sm-9">
                     <input type="text"
                            class="form-control"
-                           ngModel
+                           [ngModel]="initForm.product"
                            name="product"
                            placeholder="Product name"
-                           required>
-                    <span class="form-text text-danger">Must have at least 3 letters</span>
+                           required
+                           minlength="3">
+                    <span class="form-text text-danger"
+                          *ngIf="validName()">
+                        Must have at least 3 letters
+                    </span>
                 </div>
             </div>
 
@@ -26,9 +30,13 @@
                   <div class="col-sm-9">
                       <input type="number"
                              class="form-control"
-                             ngModel
+                             [ngModel]="initForm.price"
                              name="price"
                              placeholder="Product price">
+                      <span class="form-text text-danger"
+                             *ngIf="validPrice()">
+                           Price must be greater than 0
+                       </span>
                   </div>
             </div>
 
@@ -38,15 +46,19 @@
                   <div class="col-sm-9">
                       <input type="number"
                              class="form-control"
-                             ngModel
+                             [ngModel]="initForm.stock"
                              name="stock"
-                             placeholder="Product stock">
+                             customMin
+                             [minimum]="0"
+                             placeholder="Product stock"
+                             required>
                   </div>
               </div>  
 
               <div class="row">
                 <div class="col">
                     <button type="submit"
+                            [disabled]="myForm.invalid"
                             class="btn btn-primary float-end">
                         Save
                     </button>
@@ -64,8 +76,17 @@
         <span>Valid</span>
         <pre>{{ myForm.valid }}</pre>
 
+        <span>Pristine</span>
+        <pre>{{ myForm.pristine }}</pre>
+
+        <span>Touched</span>
+        <pre>{{ myForm.touched }}</pre>
+
         <span>Value</span>
         <pre>{{ myForm.value | json }}</pre>
+
+        <!-- <span>CustomDirective</span>
+        <pre>{{ myForm.controls['stock'].errors | json }}</pre> -->
 
     </div>
 
