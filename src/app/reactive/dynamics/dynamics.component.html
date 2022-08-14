@@ -1,1 +1,62 @@
-<p>dynamics works!</p>
+<h2>Reactive: <small>Dynamics</small></h2>
+<hr>
+
+<form autocomplete="off">
+
+    <!-- Name -->
+    <div class="mb-3 row">
+        <label class="col-sm-3 col-form-label">Name</label>
+        <div class="col-sm-9">
+            <input class="form-control"
+                   placeholder="Write your name"
+                   name="name"
+                   required>
+                <span class="form-text text-danger">
+                    Field required
+                </span>
+        </div>
+    </div>
+
+     <!-- Add Favorite -->
+     <div class="mb-3 row">
+        <label class="col-sm-3 col-form-label">Add</label>
+
+        <div class="col-sm-9">
+            <div class="input-group">  
+                <input class="form-control"
+                       placeholder="Add your favorite game"
+                       name="newGame">
+                <button class="btn btn-outline-primary"
+                        type="button">
+                    Add
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Games list -->
+    <div class="mb-3 row">
+        <label class="col-sm-3 col-form-label">Favorites</label>
+        <div class="col-sm-9">
+
+            <div class="input-group mb-1">
+                <input  class="form-control"
+                        required>
+                <button class="btn btn-outline-danger"
+                        type="button">
+                        <i class="bi bi-trash"></i>
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+           <button type="button"
+                   class="btn btn-primary float-end">
+            Save
+           </button>
+        </div>
+    </div>
+</form>
