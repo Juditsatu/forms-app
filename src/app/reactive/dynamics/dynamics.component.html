@@ -1,7 +1,7 @@
 <h2>Reactive: <small>Dynamics</small></h2>
 <hr>
 
-<form autocomplete="off">
+<form (ngSubmit)="save()" autocomplete="off" [formGroup]="myForm">
 
     <!-- Name -->
     <div class="mb-3 row">
@@ -9,9 +9,9 @@
         <div class="col-sm-9">
             <input class="form-control"
                    placeholder="Write your name"
-                   name="name"
-                   required>
-                <span class="form-text text-danger">
+                   formControlName="name">
+                <span class="form-text text-danger"
+                      *ngIf="invalidField('name')">
                     Field required
                 </span>
         </div>
@@ -24,10 +24,12 @@
         <div class="col-sm-9">
             <div class="input-group">  
                 <input class="form-control"
+                       [formControl]="newFavorite"
                        placeholder="Add your favorite game"
-                       name="newGame">
+                       (keyup.enter)="addFavorite()">
                 <button class="btn btn-outline-primary"
-                        type="button">
+                        type="button"
+                        (click)="addFavorite()">
                     Add
                 </button>
             </div>
@@ -37,26 +39,40 @@
     <!-- Games list -->
     <div class="mb-3 row">
         <label class="col-sm-3 col-form-label">Favorites</label>
-        <div class="col-sm-9">
+        <div class="col-sm-9" formArrayName="favorites">
 
-            <div class="input-group mb-1">
+            <div class="input-group mb-1"
+                 *ngFor="let favorite of favoritesArr.controls; let i = index">
                 <input  class="form-control"
-                        required>
+                        [formControlName]="i">
                 <button class="btn btn-outline-danger"
-                        type="button">
+                        type="button"
+                        (click)="deleteGame(i)">
                         <i class="bi bi-trash"></i>
                 </button>
             </div>
 
         </div>
+        
     </div>
 
     <div class="row">
         <div class="col-sm-12">
            <button type="button"
-                   class="btn btn-primary float-end">
+                   class="btn btn-primary float-end"
+                (click)="save()">
             Save
            </button>
         </div>
     </div>
 </form>
+
+<span>Valid</span>
+<pre>{{ myForm.valid }}</pre>
+
+<span>Valid</span>
+<pre>{{ myForm.value | json }}</pre>
+<br>
+
+<span>Add game</span>
+<pre>{{ newFavorite.value | json }}</pre>
