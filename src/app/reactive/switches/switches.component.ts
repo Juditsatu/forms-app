@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-switches',
@@ -10,13 +11,40 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 })
 export class SwitchesComponent implements OnInit {
 
-  constructor(
-    private modalService: NgbModal) { }
+  constructor( 
+    private fb: FormBuilder,
+    private modalService: NgbModal ) { }
 
   ngOnInit(): void {
+    this.myForm.reset({
+       ...this.person,
+       terms: false
+    });
+
+    //prints on console live the changes made in the form
+    this.myForm.valueChanges
+      .subscribe( ({ terms, ...rest }) => {
+        // delete form.terms;
+        this.person = rest;
+      })
+  }
+  person = {
+    gender: 'F',
+    notifications: true
   }
 
+  save() {
+    const formValue = { ...this.myForm.value };
+    console.log(formValue)
+  }
 
+  myForm: FormGroup =  this.fb.group({
+    gender: [ this.person.gender, Validators.required ],
+    notifications: [ this.person.notifications, Validators.required ],
+    terms: [ false, Validators.requiredTrue ]
+  });
+
+  //MODAL
   title = 'appBootstrap';
   
   closeResult: string | undefined;
